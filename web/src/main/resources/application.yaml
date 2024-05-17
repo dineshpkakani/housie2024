@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: WEB-PORTAL
+  config:
+    import: configserver:http://localhost:9296 #to fetch properties from config server
+server:
+  port: 8083

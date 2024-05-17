@@ -1,0 +1,141 @@
+<div class="container modalContainer" id="priceconfigureddiv">
+  <div class="modalContent">
+<table>
+  <thead>
+    <tr colspan="2">
+      Event name : <span ng-bind="prize.eventname"></span>
+    </tr>
+  </thead>
+  <tbody>
+  <tr>
+      <td>Total amount collected</td>
+      <td><select ng-model="prize.prizename" ng-options="x.name for x in prize.list">
+
+            </select></td>
+  </tr>
+  <tr>
+    <td>Qty:</td>
+    <td><input type="text" ng-model="prize.qty"></td>
+  </tr>
+  <tr>
+    <td>Total amount for current prize:</td>
+    <td><input type="text" ng-model="prize.prizeval"></td>
+  </tr>
+  </tbody>
+</table>
+
+    <div>
+      <input type="button" value="Close"  style="width: 35%" ng-click="closepriceConfigureView();">
+</div>
+  </div>
+</div>
+<div class="container modalContainer" id="addpriceconfigureddiv">
+  <div class="modalContent">
+  <table>
+    <tr>
+      <th>Event name:</th><th><span id="spaneventname">{{prizeconfigobj.eventdisplayname}}</span></th>
+    </tr>
+    <tr>
+      <th>Prize name:</th><th><span id="spanprizename">{{prizeconfigobj.prizedisplayname}}</span></th>
+    </tr>
+    <tr>
+      <th  style="padding: 6px">Total Amount:</th>
+      <th><input type="text" id="txteventprizeconfigamount" ng-model="prizeconfigobj.prizeamount" style="max-width: 80px;margin-bottom:0px;padding: 6px" /></th>
+    </th>
+    </tr>
+    <tr>
+
+      <th> Prize Type: </th>
+      <th>
+        Equal:
+       &nbsp;&nbsp; <input type="radio"
+               name="amountgroup"
+               ng-model='amountequal'
+               value="1" ng-click="EventPrizeConfigSetAmount(1);" />
+        <br> Unequal :
+        <input type="radio"
+               name="amountgroup"
+               ng-model='amountequal'
+               value="2" ng-click="EventPrizeConfigSetAmount(2);" />
+      </th>
+
+
+    </tr>
+    <tr  ng-repeat="x in getNumbers(prizeconfigobj.qty) track by $index">
+      <th style="padding: 6px">{{prizeconfigobj.prizedisplayname}}{{x}}:</th>
+      <th><input type="text" id="txtprizeconfigqty{{x}}" ng-readonly="amountequal==1" style="max-width: 80px;margin-bottom:0px;padding: 6px" /> </th>
+    </tr>
+    <tr>
+      <td colspan="2" style="text-align: center">
+           <input type="button" value="Save" style="max-width: 80px" ng-click="saveEventPrizeData()"/>
+           <input type="button" value="Cancel" ng-click="prizeConfigaddDialogClose()" style="max-width: 80px"/>
+      </td>
+    </tr>
+  </table>
+  </div>
+</div>
+
+
+<div id="diveventprizeconfigure" style="display: none">
+  <table>
+    <tr>
+      <th width="20%">Event name</th>
+      <td width="40%">
+
+        <select id="sclteventname" name="sclteventname" ng-model="prizeconfigobj.eventname" ng-change="setPrizeListforEvent()">
+          <option ng-repeat="eventobj in prizeconfigobj.eventnameListData track by $index" value="{{eventobj.eventId}}--{{eventobj.eventDate}}">
+            {{eventobj.name}}
+          </option>
+        </select>
+      </td>
+      <td width="40%">
+          <span ng-bind="prizeconfigobj.eventdate"></span>
+      </td>
+    </tr>
+    <tr>
+      <th>Prize name</th>
+      <td>
+        <select id="scltprizename" name="scltprizename" ng-model="prizeconfigobj.prizename" ng-change="setPrizeConfigImagePath()">
+          <option ng-repeat="prizeobj in prizeconfigobj.prizenameListData track by $index" value="{{prizeobj.id}}--{{prizeobj.imagename}}">
+            {{prizeobj.prizename}}
+          </option>
+        </select>
+      </td>
+      <td>
+        <img ng-hide="prizeconfigobj.imagename=='' ||prizeconfigobj.imagename==undefined " src="/resources/images/prizeimg1/{{prizeconfigobj.imagename}}" style="width: 70%"/>
+      </td>
+    </tr>
+    <tr>
+      <th>Quantity</th>
+      <th colspan="2"><input id="prizeconfigqty" ng-model="prizeconfigobj.qty" type="text"style="max-width: 80px" />
+        <span style="padding-left: 30px;"><input type="button" style="max-width: 100px;" value="Add Prize" ng-click="addeventprize();"></span>
+      </th>
+    </tr>
+  </table>
+
+  <hr style="line-height: 10px;">
+  <!-- Display all prize configured for event -->
+  <table>
+    <tr>
+      <th>Total Prize:<span ng-bind="totalnoofprize"></span></th>
+      <th>Total Prize Amount:<span ng-bind="totalprizeamount"></span></th>
+    </tr>
+  </table>
+  <table>
+    <thead>
+    <tr>
+      <th>Prize name</th>
+      <th>Seq.</th>
+      <th>Amount</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="prizeObj in prizeconfigobj.eventprizedata track by $index">
+      <td ng-bind="prizeObj.prizename"></td>
+      <td ng-bind="prizeObj.sequence"></td>
+      <td ng-bind="prizeObj.prizevalue"></td>
+    </tbody>
+
+  </table>
+
+</div>

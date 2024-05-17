@@ -1,0 +1,198 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+}
+.container {
+    max-width: 950px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.container input[type="text"],
+.container input[type="password"],
+.container input[type="date"],
+.container input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+.container input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+.container input[type="submit"]:hover {
+    background-color: #45a049;
+}
+.container input[type="button"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+.container input[type="button"]:hover {
+    background-color: #45a049;
+}
+.container select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+ul.menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+ul.menu li {
+    display: inline-block;
+    margin-right: 10px;
+}
+ul.menu li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    background-color: #AFC065;
+    color: white;
+    border-radius: 5px;
+}
+ul.menu li a:hover {
+    background-color: #AFC059;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+table th,
+table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+table th {
+    background-color: #f2f2f2;
+}
+.titlecolor{
+    color:#AFC065;
+    text-align: center;
+}
+.housielogotext{
+    margin:0px;
+    height:25px;
+    font-size: small;
+    text-align:center;
+    color: #AFC065;
+}
+.errormessage{
+    color:red;
+}
+
+/*.editimgicon{
+width:20px;
+background-image: url('/resources/images/edit-solid.svg');
+}*/
+
+/* Modal css */
+.modalContainer {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 144px;
+    top: 0;
+    width: 80%;
+    height: 80%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.modalContent {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+/* end modal css */
+.foot-control {
+    position: fixed;
+    bottom: 0px;
+    background: #fff;
+    padding: 5px;
+    padding-right: 100px;
+}
+.pull-right {
+    float: right!important;
+}
+.btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: .65;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.cust-paged .btn {
+    background: #f5fcff;
+    color: #303030;
+    border: 1px solid #ccc;
+}
+.btn-lblue {
+    background: #2b91d9;
+    border-color: #54879c;
+    color: #fff;
+}
+.btn-xs {
+    padding: 2px 10px;
+}
+.btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.cust-paged input[type="text"] {
+    width: 30px;
+    color: #009bbe;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 5px;
+    height: 24px;
+}
+.pull-right {
+    float: right!important;
+}
+.encounter-label {
+    font-size: 12px;
+    color: #2a6993;
+    font-weight: 700;
+    line-height: 34px;
+    margin-right: 20px;
+    float: right;
+    margin-bottom: 0;
+}

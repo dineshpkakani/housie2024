@@ -1,0 +1,158 @@
+<div id="eventmasterdiv" style="display: none">
+<table>
+  <tr>
+    <td colspan="2">
+      <table width="100%">
+        <tr>
+          <td width="20%">&nbsp;</td>
+        <td width="20%"><input type="text" width="200px" style="max-width: 200px;" class="form-control" placeholder="search event" ng-model="txteventsearch" style="cursor: inherit; padding-left: 25px;"></td>
+        <td width="20%">
+          <div class="input-group-btn">
+            <button type="button" class="btn btn-default dropdown-toggle" ng-click="loadEventByTitle()" id="">Search</button>
+          </div>
+        </td>
+          <td style="text-align: right">
+            <img src="/resources/images/plus-square.svg" width="28px" ng-click="OpenEventModal(0);" />
+          </td>
+        </tr >
+      </table>
+    </td>
+  </tr>
+</table>
+
+<table>
+  <thead>
+  <tr>
+    <th title="name of price">Name</th>
+    <th title="date of price">Date</th>
+    <!--<th title="Tickets Per Person">Max Tickets</th>-->
+    <th title="Ticket price">Price</th>
+    <!--<th title="Total ticket sold">Sold Tickets</th>-->
+    <th title="number of players">Players</th>
+    <th title="current status">Status</th>
+    <th title="current status">Prize</th>
+    <th title="Summary">Summary</th>
+    <th>Edit</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="event in eventList track by $index">
+    <td ng-bind="event.name"></td>
+    <td ng-bind="event.eventDate"></td>
+    <!--<td ng-bind="event.noOfTickets"></td>-->
+    <td ng-bind="event.pricePerTicket"></td>
+    <!--<td ng-bind="event.soldTickets"></td>-->
+    <td ng-bind="event.noOfUsers"></td>
+    <td ng-bind="event.status"></td>
+    <th ng-click="openpriceConfigureView(event.eventId);" ><img src="/resources/images/prize.png" width="20px"/></th>
+    <th ng-click="openSummaryModal(event.eventId);" ><img src="/resources/images/dashboard.png"/></th>
+    <td ng-click="loadEventById(event.eventId)"><img src="/resources/images/edit-solid.svg" width="20px" /></td>
+  </tr>
+  </tbody>
+</table>
+<div class="foot-control" style="width: 50%" >
+  <div class="pull-right cust-paged" id="divNoRecordsFound" style="display: none;">No records found.</div>
+  <div class="pull-right cust-paged" id="divEncounterCount" style="">
+    <label class="encounter-label" style="display: inline; float: left;"><span>Total Records:{{totalCount}}</span></label> |
+    <button class="btn btn-lblue btn-xs disabled" id="btnPrev"  ng-click="prevpage()">PREV</button>
+    <span>Page</span>
+    <input type="text" id="txtPage" ng-model="currentpage" disabled="disabled" autocomplete="one-time-code">
+    <span>of <span id="spnPageCount" ng-bind="totalpages">1</span></span>
+    <button class="btn btn-lblue btn-xs disabled" id="btnNext" ng-click="nextpage()">NEXT</button>
+  </div>
+  <div class="clearfix"></div>
+</div>
+
+<div class="container modalContainer" id="eventsummarymodal">
+  <div class="modalContent">
+
+      <div style="padding-bottom: 20px">&nbsp;</div>
+          <table>
+            <thead>
+              <tr>
+                 <th>Event name:</th>
+                <th>{{summary.eventname}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Date: </td>
+                <td>{{summary.eventdate}}</td>
+              </tr>
+              <tr>
+                <td>Ticket Price: </td>
+                <td>{{summary.ticketprice}}</td>
+              </tr>
+              <tr>
+                <td>Status: </td>
+                <td>{{summary.status}}</td>
+              </tr>
+              <tr>
+                <td>Total Collection: </td>
+                <td>{{summary.totalcollection}}</td>
+              </tr>
+              <tr>
+                <td>Total Prize distributed:</td>
+                <td>{{summary.totalprize}}</td>
+              </tr>
+              <tr>
+                <td>Total Sold tickets:</td>
+                <td>{{summary.soldtickets}}</td>
+              </tr>
+              <tr>
+                <td>Total Players:</td>
+                <td>{{summary.noofplayers}}</td>
+              </tr>
+
+            </tbody>
+            <tfoot>
+            <tr>
+              <td colspan="2"><input type="button" value="Close"  style="width: 25%" ng-click="closeSummaryModal();"></td>
+            </tr>
+            </tfoot>
+          </table>
+  </div>
+</div>
+
+<div class="container modalContainer" id="eventmodaldial">
+  <div class="modalContent">
+  <form action="/event/save" method="post">
+    <div style="padding-bottom: 20px">&nbsp;</div>
+    <div id="errordiv"  ng-repeat="(key, value) in errorlist" class="errormessage" >
+      <!--<p>{{key}} - {{value}}</p>-->
+      <p>{{value}}</p>
+    </div>
+
+    <label for="txteventname" >Event Name</label>
+    <input type="text" id="txteventname" ng-model="txteventname" placeholder="Please enter eventname"/>
+
+    <label for="txteventdate">Date</label>
+    <input type="date" id="txteventdate" ng-model="txteventdate " placeholder="please select eventdate"/>
+
+    <label for="txtmaxtickets">Max Tickets</label>
+    <input type="text" id="txtmaxtickets" ng-model="txtmaxtickets" placeholder="Maximum tickets per employee"/>
+
+    <label for="txtperprice">Price Per Ticket</label>
+    <input type="text" id="txtperprice" ng-model="txtperprice" placeholder="Maximum tickets per employee"/>
+
+    <label for="txtperprice">Status</label>
+
+    <select id="scltstatus" name="scltstatus" ng-model="scltstatus">
+      <option value="started">Started</option>
+      <option value="Not started" selected>Not Started</option>
+      <option value="completed">Completed</option>
+    </select>
+    <div>
+
+      <label for="txtsoldtickets">Sold Tickets</label>
+      <input type="text" id="txtsoldtickets" ng-model="txtsoldtickets" placeholder="Total tickets sold"/>
+
+      <label for="txttotplayers">Total Players</label>
+      <input type="text" id="txttotplayers"  ng-model="txttotplayers" placeholder="Total tickets sold"/>
+    </div>
+    <input type="button" value="Register" style="width:50%" ng-click="saveEvent()">
+    <input type="button" value="Close"  style="width: 35%" ng-click="closeEventModal();">
+  </form>
+  </div>
+</div>
+</div>

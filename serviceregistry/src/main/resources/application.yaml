@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: serviceregistry     #application name
+server:
+  port: 8761        #application port
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false     #this is a server itself no need to register with other
+    fetch-registry: false           #dont fetch registery server
+
+  config:
+    import: configserver:http://localhost:9296 #to fetch properties from config server

@@ -1,0 +1,208 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <style>  
+		 body{
+		  font-family: monospace;
+		  font-size: 28px;
+		  font-weight: bold;
+		 }
+        .ticket {  
+            display: grid;  
+            grid-template-columns: repeat(9, 1fr);  
+            gap: 10px;  
+            width: 550px;  
+            padding: 10px;  
+            border: 1px solid black;  
+            border-radius: 10px;  
+        }  
+        .cell {  
+            width: 50px;  
+            height: 50px;  
+            border: 1px solid #d85800;  
+            border-radius: 50%;  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;
+			background-color: #d85800;
+			color: #ffffff;			
+		} 
+		 .bigcircle {  
+            width: 150px;  
+            height: 150px;  
+            border: 1px solid #f2c65d;  
+            border-radius: 50%;  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;
+			background-color:#f2c65d;
+			color: #ffffff;	
+			font-size:70px;		
+		} 
+		.blankcell {  
+            width: 50px;  
+            height: 50px;  
+            border: 1px solid black;  
+            border-radius: 50%;  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;
+		} 
+		.cell:hover {  
+            border: 1px solid #f2c65d;  
+            background-color: #f2c65d;
+			color: #ffffff;			
+			
+        } 
+		.selectedcell{
+		 width: 50px;  
+            height: 50px;  
+            border-radius: 50%;  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;
+			background-color: #0050b1 !important;
+			color: #ffffff !important;	
+			border: 1px solid #0050b1 !important;
+		}
+		.trbackcolorodd{
+			background-color: #0050b1 !important;
+			color: #ffffff !important;	
+		}
+		.trbackcoloreven{
+			background-color: #d85800 !important;
+			color: #ffffff !important;	
+		}		
+	
+    </style>  
+</head>  
+<body>  
+<table style="width:100%">
+	<thead>
+	<tr>
+		<th width="70%">Tickets</th><th width="30%">Prize List</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			<table>
+				<tr>
+					<td> 
+						<div class="ticket">  
+							<div class="cell selectedcell">1</div>  
+							<div class="blankcell"></div>  
+							<div class="cell">25</div>  
+							<div class="selectedcell">33</div>  
+							<div class="blankcell"></div>  
+							<div class="selectedcell">57</div>  
+							<div class="blankcell"></div>  
+							<div class="selectedcell">77</div>  
+							<div class="blankcell"></div>
+							
+							<div class="blankcell"></div>  
+							<div class="selectedcell">17</div>  
+							<div class="blankcell"></div>  
+							<div class="cell">37</div>  
+							<div class="blankcell"></div>  
+							<div class="selectedcell">58</div>  
+							<div class="blankcell"></div>  
+							<div class="cell">78</div>  
+							<div class="cell">81</div>
+							
+							<div class="selectedcell">4</div>  
+							<div class="blankcell"></div>  
+							<div class="selectedcell">28</div>  
+							<div class="blankcell"></div>  
+							<div class="selectedcell">46</div>  
+							<div class="blankcell"></div>  
+							<div class="cell">65</div>  
+							<div class="blankcell"></div>  
+							<div class="cell">85</div>	
+						</div>   
+					</td>
+					<tr>
+					<tr>
+						<td> 
+							<div class="ticket">  
+								<div class="cell selectedcell">1</div>  
+								<div class="blankcell"></div>  
+								<div class="cell">25</div>  
+								<div class="selectedcell">33</div>  
+								<div class="blankcell"></div>  
+								<div class="selectedcell">57</div>  
+								<div class="blankcell"></div>  
+								<div class="selectedcell">77</div>  
+								<div class="blankcell"></div>
+								
+								<div class="blankcell"></div>  
+								<div class="selectedcell">17</div>  
+								<div class="blankcell"></div>  
+								<div class="cell">37</div>  
+								<div class="blankcell"></div>  
+								<div class="selectedcell">58</div>  
+								<div class="blankcell"></div>  
+								<div class="cell">78</div>  
+								<div class="cell">81</div>
+								
+								<div class="selectedcell">4</div>  
+								<div class="blankcell"></div>  
+								<div class="selectedcell">28</div>  
+								<div class="blankcell"></div>  
+								<div class="selectedcell">46</div>  
+								<div class="blankcell"></div>  
+								<div class="cell">65</div>  
+								<div class="blankcell"></div>  
+								<div class="cell">85</div>	
+							</div>   
+						</td>
+					</tr>	
+					
+				</table>
+			</td>
+		</td>
+		<td>
+			<table width="100%">
+				<tr class="trbackcolorodd">
+					<td>Prize 1	</td> <td><button>Claim</button></td>
+				</tr>
+				<tr  class="trbackcoloreven">
+					<td>Prize 2	</td> <td><button>Already Claimed</button></td>
+				</tr>
+				<tr  class="trbackcolorodd">
+					<td>Prize 3	</td> <td><button>Claim</button></td>
+				</tr>
+				<tr class="trbackcoloreven">
+					<td>Prize 4	</td> <td><button>Already Claimed</button></td>
+				</tr>
+				<tr class="trbackcolorodd">
+					<td>Prize 5	</td> <td><button>Claim</button></td>
+				</tr>
+				
+				
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<table width="100%">
+				<tr>
+					<td width="20%">Game Status: Continue</td>
+					<td width="60%" style="display:flex !important;justify-content:center !important"><div class="bigcircle">99</div></td>
+					<td width="20%">Total Prize claimed:4 and Pending claim:2</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+
+</table>
+  
+  
+  
+  
+  
+  
+  
+  
+</body>  
+</html>  

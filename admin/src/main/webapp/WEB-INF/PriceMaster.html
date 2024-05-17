@@ -1,0 +1,20 @@
+<div id="pricemasterdiv" style="display: none">
+<table>
+  <thead>
+  <tr>
+    <th>No.</th>
+    <th title="name of price" width="20%">Prize Name</th>
+    <th title="date of price" width="40%">Type</th>
+    <th title="Tickets Per Person" width="40%">Rules</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="prizeobj in prizeListData track by $index">
+    <td>{{$index+1}}</td>
+    <td><b>{{prizeobj.prizename}}</b></td>
+    <th><img src="/resources/images/prizeimg1/{{prizeobj.imagename}}" style="width: 70%"/></th><!-- -->
+    <td>{{prizeobj.rules}}</td>
+  </tr>
+  </tbody>
+</table>
+</div>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tambola</title>
+<script src="/resources/js/jquery.min.js"></script>
+<script src = "/resources/js/angular.min.js"> </script>
+<script src="/resources/js/AdminController.js"></script>
+<link href="/resources/css/housieadmin.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container" ng-controller="adminController" ng-app="adminApp" style="padding-top:2px;">
+    <div ng-init="init()">
+        <div style="float:left">
+            <img src="/resources/images/logo.png" width="80px" />
+            <h2 class="housielogotext">Welcome <%=usertype%></h2>
+        </div>
+        <ul class="menu" style="margin-left:120px;margin-top:15px">
+            <li><a href="/admin">Home</a></li>
+            <li><a href="#" ng-click="setScreen(1)">Events Master</a></li>
+            <li><a href="#" ng-click="setScreen(2)">Price Master</a></li>
+            <li><a href="#" ng-click="setScreen(3)">Price Configure</a></li>
+            <li><a href="#" ng-click="setScreen(4)">User Master</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="/logout" style="background-color:white;color: #AFC059">Logout</a></li>
+        </ul>
+        <div style="line-height: 40px;"></div>
+    </div>

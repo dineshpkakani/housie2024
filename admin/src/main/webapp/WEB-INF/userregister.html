@@ -1,0 +1,37 @@
+
+    <div  id="userregistartion">
+        <div>
+            <form action="/user/save" method="post">
+                <div style="padding-bottom: 20px">&nbsp;</div>
+                <div id="erroruserdiv"  ng-repeat="(key, value) in errorlist" class="errormessage" >
+                    <!--<p>{{key}} - {{value}}</p>-->
+                    <p>{{value}}</p>
+                </div>
+                <label for="txtregistername">Name</label>
+                <input type="text" id="txtregistername" ng-model="txtregistername" placeholder="Please enter name"/>
+
+                <label for="txtregisterusername">Username</label>
+                <input type="text" id="txtregisterusername" ng-model="txtregisterusername" placeholder="Please enter username"/>
+
+                <label for="txtregisterempcode">Employee code</label>
+                <input type="text" id="txtregisterempcode" ng-model="txtregisterempcode " placeholder="please select employee code"/>
+
+                <label for="txtregisteremail">E-mail</label>
+                <input type="text" id="txtregisteremail" ng-model="txtregisteremail" placeholder="please select email"/>
+
+                <label for="txtregisterpassword">Role</label>
+                <select ng-model="slctregisterrole">
+                    <optgroup label="Roles">
+                        <option value="ADMIN">ADMIN</option>
+                        <option value="USER">USER</option>
+                    </optgroup>
+
+                <label for="txtregisterpassword">Password</label>
+                <input type="password" id="txtregisterpassword" ng-model="txtregisterpassword" placeholder="Maximum tickets per employee"/>
+
+                <input type="button" value="Register" style="width:30%" ng-click="saveuser()">
+
+            </form>
+        </div>
+    </div>
+</div>
