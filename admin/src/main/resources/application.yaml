@@ -1,3 +1,5 @@
+server:
+  port: 8082
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
@@ -14,19 +16,8 @@ spring:
     show-sql: true
   application:
     name: ADMIN-PORTAL
-logging:
-  file:
-    name: d:/logs/application-debug.log
-  level:
-    org:
-      springframework: DEBUG
-      hibernate:
-        sql: DEBUG
-
   devtools:
     restart:
       enabled: true
   config:
-    import: configserver:http://localhost:9296 #to fetch properties from config server
-server:
-  port: 8082
+    import: optional:configserver:http://localhost:9296/

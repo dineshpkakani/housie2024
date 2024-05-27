@@ -7,16 +7,31 @@ spring:
     gateway:
       routes:
         - id: ADMIN-PORTAL
-          uri: http://localhost:8082
+          uri: lb://ADMIN-PORTAL
           predicates:
             - Path=/event/**, /prizeconfigure/**, /prizemaster/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: ADMIN-PORTAL
+                fallbackuri: forward:/adminServiceFallBack
         - id: WEB-PORTAL
-          uri: http://localhost:8083
+          uri: lb://WEB-PORTAL
           predicates:
             - Path=/login.html
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: WEB-PORTAL
+                fallbackuri: forward:/webServiceFallBack
+      discovery:
+        locator:
+          enabled: true
+    config:
+      enabled: true
+      uri: lb:http://localhost:9296
 server:
   port: 8080
-
 
 zipkin:
   base-url: http://127.0.0.1:9411/
@@ -28,7 +43,3 @@ management:
         include: '*'
 
 
-  cloud:
-    config:
-      enabled: true
-      uri: http://localhost:9296
