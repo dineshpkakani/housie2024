@@ -4,15 +4,7 @@ server:
 spring:
   application:
     name: CONFIG-SERVER #application name
+  profiles:
+    active: native
 
-    #Connecting config sever with github
-  cloud:
-    config:
-      server:
-        git:
-          #clone-on-start: true
-          uri: https://github.com/dineshpkakani/housie-app-config
-          username: dinmscit@gmail.com
-          password: Menkad@1987!
-          clone-on-start: true  #AS APP STARTS ITS CLONE PROPERTIES FILES FROM GITHUB
 

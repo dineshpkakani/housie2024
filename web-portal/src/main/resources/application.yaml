@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: web-portal
+  config:
+    import: "optional:configserver:http://localhost:9296" #to fetch properties from config server

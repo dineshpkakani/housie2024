@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: admin-portal
+  config:
+    import: "optional:configserver:http://localhost:9296"

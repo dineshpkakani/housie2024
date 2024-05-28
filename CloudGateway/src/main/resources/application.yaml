@@ -1,45 +1,44 @@
+server:
+  port: 8080
+  
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+    
 spring:
   application:
-    name: API-GATEWAY
+    name: api-gateway
   config:
-    import: configserver:http://localhost:9296 #to fetch properties from config server
+    import: "optional:configserver:http://localhost:9296"
   cloud:
     gateway:
       routes:
-        - id: ADMIN-PORTAL
-          uri: lb://ADMIN-PORTAL
+        - id: admin-portal
+          uri: lb://admin-portal
           predicates:
             - Path=/event/**, /prizeconfigure/**, /prizemaster/**
-          filters:
-            - name: CircuitBreaker
-              args:
-                name: ADMIN-PORTAL
-                fallbackuri: forward:/adminServiceFallBack
-        - id: WEB-PORTAL
-          uri: lb://WEB-PORTAL
-          predicates:
-            - Path=/login.html
-          filters:
-            - name: CircuitBreaker
-              args:
-                name: WEB-PORTAL
-                fallbackuri: forward:/webServiceFallBack
-      discovery:
-        locator:
-          enabled: true
-    config:
-      enabled: true
-      uri: lb:http://localhost:9296
-server:
-  port: 8080
-
-zipkin:
-  base-url: http://127.0.0.1:9411/
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
+          #filters:
+          #- name: CircuitBreaker
+          #  args:
+          #    name: admin-portal
+          #   fallbackuri: forward:/adminServiceFallBack
+        #- id: web-portal
+        #  uri: lb://web-portal
+        #  predicates:
+        #    - Path=/login.html
+          #filters:
+          #  - name: CircuitBreaker
+          #    args:
+          #      name: web-portal
+          #      fallbackuri: forward:/webServiceFallBack
+                
+#zipkin:
+#  base-url: http://127.0.0.1:9411/
 
 
