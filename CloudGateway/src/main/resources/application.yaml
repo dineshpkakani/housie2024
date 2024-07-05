@@ -23,22 +23,29 @@ spring:
           uri: lb://admin-portal
           predicates:
             - Path=/event/**, /prizeconfigure/**, /prizemaster/**
-          #filters:
-          #- name: CircuitBreaker
-          #  args:
-          #    name: admin-portal
-          #   fallbackuri: forward:/adminServiceFallBack
-        #- id: web-portal
-        #  uri: lb://web-portal
-        #  predicates:
-        #    - Path=/login.html
-          #filters:
-          #  - name: CircuitBreaker
-          #    args:
-          #      name: web-portal
-          #      fallbackuri: forward:/webServiceFallBack
-                
+          filters:
+          - name: CircuitBreaker
+            args:
+              name: admin-portal
+              fallbackuri: forward:/adminServiceFallBack
+        - id: web-portal
+          uri: lb://web-portal
+          predicates:
+            - Path=/login.html
+          filters:
+           - name: CircuitBreaker
+             args:
+               name: web-portal
+               fallbackuri: forward:/webServiceFallBack
 #zipkin:
 #  base-url: http://127.0.0.1:9411/
 
 
+logging:
+  file:
+    name: d:/logs/application-debug.log
+  level:
+    org:
+      springframework: DEBUG
+      hibernate:
+        sql: DEBUG
