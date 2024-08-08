@@ -37,6 +37,12 @@ spring:
              args:
                name: web-portal
                fallbackuri: forward:/webServiceFallBack
+        - id: secuirtyapp
+          uri: lb://secuirtyapp
+          predicates:
+            - Path=/livelogin, /login
+
+
 #zipkin:
 #  base-url: http://127.0.0.1:9411/
 
@@ -49,3 +55,4 @@ logging:
       springframework: DEBUG
       hibernate:
         sql: DEBUG
+
