@@ -38,7 +38,7 @@ spring:
                name: web-portal
                fallbackuri: forward:/webServiceFallBack
         - id: secuirtyapp
-          uri: lb://secuirtyapp
+          uri: http://localhost:8085
           predicates:
             - Path=/livelogin, /login
 
