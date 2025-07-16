@@ -3,3 +3,10 @@ spring:
     name: securityapp
   config:
     import: "optional:configserver:http://localhost:9296"
+logging:
+  file:
+    name: d:/logs/application-debug.log
+  level:
+    root: "warn"
+    org.springframework.web: "debug"
+    org.hibernate: "error"

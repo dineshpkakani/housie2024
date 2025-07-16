@@ -10,6 +10,8 @@ public class ServiceregistryApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ServiceregistryApplication.class, args);
+
+
 	}
 
 }

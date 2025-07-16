@@ -12,3 +12,10 @@ eureka:
     fetch-registry: false
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+logging:
+  file:
+    name: d:/logs/application-debug.log
+  level:
+    root: "warn"
+    org.springframework.web: "debug"
+    org.hibernate: "error"

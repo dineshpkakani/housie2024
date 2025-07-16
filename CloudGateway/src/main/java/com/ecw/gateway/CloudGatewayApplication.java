@@ -1,6 +1,7 @@
 package com.ecw.gateway;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
+import org.slf4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -20,19 +21,20 @@ import org.springframework.context.annotation.Bean;
 @EnableDiscoveryClient
 public class CloudGatewayApplication {
 
-	Logger logger = LoggerFactory.getLogger(CloudGatewayApplication.class);
+    Logger logger = LoggerFactory.getLogger(CloudGatewayApplication.class);
 
-	public static void main(String[] args) {
-		SpringApplication.run(CloudGatewayApplication.class, args);
-	}
-	@Bean
-	public Customizer<Resilience4JCircuitBreakerFactory> getDefaultCircuitBreaker() {
-		return factory -> factory.configureDefault(
-				id -> new Resilience4JConfigBuilder(id).circuitBreakerConfig(
-						CircuitBreakerConfig.ofDefaults()
-				).build()
-		);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(CloudGatewayApplication.class, args);
+    }
+
+    @Bean
+    public Customizer<Resilience4JCircuitBreakerFactory> getDefaultCircuitBreaker() {
+        return factory -> factory.configureDefault(
+                id -> new Resilience4JConfigBuilder(id).circuitBreakerConfig(
+                        CircuitBreakerConfig.ofDefaults()
+                ).build()
+        );
+    }
 
 	/*@Bean
 	public RouteLocator myRoutes(RouteLocatorBuilder builder) {

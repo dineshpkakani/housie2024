@@ -5,8 +5,8 @@
 package zipkin2.collector.rabbitmq;
 
 import com.rabbitmq.client.AMQP.BasicProperties;
-import com.rabbitmq.client.Address;
 import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Address;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DefaultConsumer;

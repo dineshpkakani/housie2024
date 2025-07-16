@@ -10,3 +10,10 @@ management:
   tracing:
     sampling:
       probability: 1.0
+logging:
+  file:
+    name: d:/logs/application-debug.log
+  level:
+    root: "warn"
+    org.springframework.web: "debug"
+    org.hibernate: "error"

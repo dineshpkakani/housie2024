@@ -1,19 +1,30 @@
 server:
   port: 8080
-  
+
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
-    
+
 management:
   tracing:
     sampling:
       probability: 1.0
-    
+
 spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/housie
   application:
     name: api-gateway
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
   config:
     import: "optional:configserver:http://localhost:9296"
   cloud:
@@ -22,21 +33,21 @@ spring:
         - id: admin-portal
           uri: lb://admin-portal
           predicates:
-            - Path=/event/**, /prizeconfigure/**, /prizemaster/**
+            - Path=/event/**, /prizeconfigure/**, /prizemaster/**, /home, /admin/**, /user/**
           filters:
-          - name: CircuitBreaker
-            args:
-              name: admin-portal
-              fallbackuri: forward:/adminServiceFallBack
+            - name: CircuitBreaker
+              args:
+                name: admin-portal
+                fallbackuri: forward:/adminServiceFallBack
         - id: web-portal
           uri: lb://web-portal
           predicates:
-            - Path=/login.html
+            - Path=/login.html, /css/**, /js/**
           filters:
-           - name: CircuitBreaker
-             args:
-               name: web-portal
-               fallbackuri: forward:/webServiceFallBack
+            - name: CircuitBreaker
+              args:
+                name: web-portal
+                fallbackuri: forward:/webServiceFallBack
         - id: securityapp
           uri: lb://securityapp
           predicates:
@@ -45,7 +56,6 @@ spring:
 
 #zipkin:
 #  base-url: http://127.0.0.1:9411/
-
 
 logging:
   file:

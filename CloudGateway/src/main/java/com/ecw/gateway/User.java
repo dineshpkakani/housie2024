@@ -1,10 +1,6 @@
-package com.ecw.security.security;
+package com.ecw.gateway;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,13 +13,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
- @Id
- @GeneratedValue(strategy = GenerationType.AUTO)
- private Long id;
- // @Column(unique = true)
- private String username;
- private String password;
- private String name;
- private String roles;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    // @Column(unique = true)
+    private String username;
+    private String password;
+    private String name;
+    private String roles;
 
 }

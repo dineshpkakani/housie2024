@@ -1,9 +1,9 @@
-package com.ecw.security.security;
+package com.ecw.gateway;
 
 
 public interface UserService {
- User findByUsername(String username);
+    User findByUsername(String username);
 
- User save(UserDto userDto);
+    User save(UserDto userDto);
 
 }

@@ -9,7 +9,9 @@ spring:
 
 
 logging:
+  file:
+    name: d:/logs/application-debug.log
   level:
-    org:
-      springframework:
-        security: DEBUG
+    root: "warn"
+    org.springframework.web: "debug"
+    org.hibernate: "error"

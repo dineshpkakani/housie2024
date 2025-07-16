@@ -24,8 +24,12 @@ public class SecurityConfig {
   return new BCryptPasswordEncoder();
  }
 
+ @Autowired
+ private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
  @Bean
  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+  /*
   http.csrf().disable().authorizeHttpRequests()
           .requestMatchers("/register").permitAll()
           .requestMatchers("/livelogin").permitAll()
@@ -37,14 +41,33 @@ public class SecurityConfig {
           .and().logout().invalidateHttpSession(true)
     .clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
     .logoutSuccessUrl("/login?logout").permitAll();
-
+*/
+  http.csrf().disable().authorizeHttpRequests((requests) -> requests
+                  .requestMatchers("/login","/livelogin","/register", "/logout", "/public/**").permitAll()
+                  .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                  .requestMatchers("/login.html").permitAll()
+                  .requestMatchers("/admin/**").hasRole("ADMIN")
+                  //.requestMatchers("/admin/**").hasRole("ROLE_ADMIN")
+                  .requestMatchers("/user/**").hasRole("USER")
+                  //.requestMatchers("/user/**").hasRole("ROLE_USER")
+                  .anyRequest().authenticated()
+          )
+          .formLogin((form) -> form
+                  .loginPage("/login.html")
+                  .successHandler(customAuthenticationSuccessHandler)
+                  .permitAll()
+          )
+          .logout((logout) -> logout
+                  .logoutUrl("/logout")
+                  .logoutSuccessUrl("/login?logout")
+                  .invalidateHttpSession(true)
+                  .deleteCookies("JSESSIONID")
+          );
   return http.build();
-
  }
 
  @Autowired
  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
   auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
-
  }
 }
