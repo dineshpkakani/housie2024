@@ -54,15 +54,13 @@ spring:
             - Path=/livelogin, /login
 
 
-#zipkin:
-#  base-url: http://127.0.0.1:9411/
-
 logging:
   file:
-    name: d:/logs/application-debug.log
+    name: d:/logs/application-debug1.log
   level:
     org:
       springframework: DEBUG
       hibernate:
         sql: DEBUG
+
 
