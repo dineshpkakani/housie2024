@@ -8,3 +8,47 @@ CREATE TABLE USERS(
       ROLES VARCHAR(25) NOT NULL,
       CONSTRAINT PK_USERS PRIMARY KEY (id)
 );
+create table if not exists category
+(
+    uid  int          not null
+    primary key,
+    type varchar(255) not null
+    );
+
+create table if not exists hibernate_sequence
+(
+    next_val bigint null
+);
+
+create table if not exists role
+(
+    id   bigint       not null
+    primary key,
+    name varchar(255) null
+    );
+
+create table if not exists tickets
+(
+    uid           int          not null
+    primary key,
+    category      varchar(255) not null,
+    currentticket varchar(255) not null,
+    empcode       int          not null,
+    generate_date datetime     not null,
+    orgticket     varchar(255) not null,
+    result        varchar(255) not null
+    );
+
+create table if not exists user
+(
+    id          bigint                              not null
+    primary key,
+    password    varchar(255)                        null,
+    username    varchar(255)                        null,
+    roles       varchar(12)                         not null,
+    empcode     int                                 not null,
+    createddate timestamp default CURRENT_TIMESTAMP not null,
+    firstname   varchar(50)                         not null,
+    lastname    varchar(50)                         not null
+    );
+
