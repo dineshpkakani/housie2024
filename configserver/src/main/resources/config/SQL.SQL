@@ -51,4 +51,4 @@ create table if not exists user
     firstname   varchar(50)                         not null,
     lastname    varchar(50)                         not null
     );
-
+;
