@@ -42,7 +42,7 @@ spring:
         - id: web-portal
           uri: lb://web-portal
           predicates:
-            - Path=/login.html, /css/**, /js/**
+            - Path=/**.html,/login/**, /css/**, /js/**
           filters:
             - name: CircuitBreaker
               args:
@@ -62,4 +62,3 @@ logging:
       springframework: DEBUG
       hibernate:
         sql: DEBUG
-
