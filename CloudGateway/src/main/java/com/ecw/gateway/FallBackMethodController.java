@@ -14,6 +14,7 @@ public class FallBackMethodController {
 
     @GetMapping("/webServiceFallBack")
     public String webmentServiceFallBackMethod() {
+
         return "Web Service is taking longer then Expected." +
                 " Please try again later";
     }

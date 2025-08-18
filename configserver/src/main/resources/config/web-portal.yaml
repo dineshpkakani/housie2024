@@ -1,15 +1,9 @@
 server:
   port: 8083
-
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
-
-management:
-  tracing:
-    sampling:
-      probability: 1.0
 logging:
   file:
     name: d:/logs/application-debug.log
@@ -17,3 +11,8 @@ logging:
     root: "warn"
     org.springframework.web: "debug"
     org.hibernate: "error"
+spring:
+  cloud:
+    discovery:
+      enabled: true
+      lower-case-service-id: true
