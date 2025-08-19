@@ -19,3 +19,4 @@ logging:
     root: "warn"
     org.springframework.web: "debug"
     org.hibernate: "error"
+    com.netflix.discovery: DEBUG
