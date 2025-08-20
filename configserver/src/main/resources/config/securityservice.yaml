@@ -1,0 +1,41 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+logging:
+  file:
+    name: d:/logs/application-debug.log
+  level:
+    root: "warn"
+    org.springframework.web: "debug"
+    org.hibernate: "error"
+spring:
+  cloud:
+    discovery:
+      enabled: true
+      lower-case-service-id: true
+  devtools:
+    restart:
+      enabled: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: denishkakani@gmail.com
+    password: Dinesh87?   # use app-specific password for Gmail
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  main:
+    web-application-type: reactive
+app:
+  jwt:
+    secret: "change-this-to-a-very-long-random-256bit-secret-string"
+    issuer: "otp-auth-demo"
+    expiry-minutes: 60
+  otp:
+    ttl-seconds: 180
+    resend-window-seconds: 30
+    max-attempts: 5

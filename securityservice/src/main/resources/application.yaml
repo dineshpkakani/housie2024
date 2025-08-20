@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: securityservice
+  config:
+    import: "optional:configserver:http://localhost:9296" #to fetch properties from config server
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/housie
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        diaclet: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+    show-sql: true
+server:
+  port: 8086

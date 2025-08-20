@@ -24,10 +24,10 @@ spring:
             - Path=/web-portal/**
           filters:
             - StripPrefix=1
-        - id: static-service
-          uri: http://localhost:8081
+        - id: securityservice
+          uri: lb://securityservice
           predicates:
-            - Path=/static-service/**
+            - Path=/auth/**
           filters:
             - StripPrefix=1
 logging:

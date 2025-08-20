@@ -12,7 +12,19 @@ public class SecurityConfig {
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http.csrf(ServerHttpSecurity.CsrfSpec::disable)
             .authorizeExchange(exchanges -> exchanges
-                    .pathMatchers("/static-service/**","/web-portal/**").permitAll()
+                    .pathMatchers(
+                            "/auth/**",
+                            "/web-portal/**",
+                            "/favicon.ico",
+                            "/css/**",
+                            "/js/**",
+                            "/images/**",
+                            "/webjars/**",
+                            "/web-portal/**",     // static resources from web-portal service
+                            "/login.html",
+                            "/register.html",
+                            "/.well-known/**"   // 👈 allow Chrome / well-known checks devtools request internally
+                    ).permitAll()
                 .anyExchange().authenticated()
             )
             .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
