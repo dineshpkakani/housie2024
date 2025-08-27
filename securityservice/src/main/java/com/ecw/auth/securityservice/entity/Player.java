@@ -35,4 +35,14 @@ public class Player {
 
     @Column(name = "password", nullable = false, length = 255)
     private String password;
+
+    @Column(name = "role", columnDefinition = "VARCHAR(20) DEFAULT 'PLAYER'" , nullable = false, length = 255)
+    private String role="ROLE_PLAYER";
+
+    @PrePersist //If you want more control, you can set defaults right before the entity is saved.
+    public void prePersist() {
+        if (role == null || "".equals(role)) {
+            role = "PLAYER"; // default role if not provided
+        }
+    }
 }

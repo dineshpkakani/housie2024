@@ -38,3 +38,6 @@ logging:
       springframework: DEBUG
       hibernate:
         sql: DEBUG
+app:
+  jwt:
+    secret: "dGhpc2lzLWFjdHVhbGx5LTI1Ni1iaXQtYmFzZTY0LWtleQ=="

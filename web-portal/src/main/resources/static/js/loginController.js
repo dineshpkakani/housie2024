@@ -1,7 +1,7 @@
 var app = angular.module('loginApp', []);
 app.controller('loginController', function ($scope, $http) {
     $scope.doLogin = function () {
-        let loginurl="/login";
+
         if($scope.username.trim().length<3){
             alert("Please enter proper username");
             return false;
@@ -15,13 +15,21 @@ app.controller('loginController', function ($scope, $http) {
           password:$scope.password
         };
 
-        $("#frmlogin").submit();
-
-        /*var data = $('#frmlogin').serialize();
-        $.post(loginurl, data,function (response){
-            alert(response);
-        });*/
-
+        $.ajax({
+            url: "/auth/player/login",
+            type: "POST",
+            contentType: "application/json",  // tell server we send JSON
+            data: JSON.stringify(param),     // convert JS object → JSON string
+            success: function(response) {
+                responseMessage.textContent = "✅ Registration successful!";
+                responseMessage.className = "message success";
+            },
+            error: function(xhr, status, error) {
+                console.error("Error: ", xhr.responseText);
+                responseMessage.textContent = "⚠️ Error connecting to server!";
+                responseMessage.className = "message fail";
+            }
+        });
     };
     $scope.doRegister = function (){
         window.location.href="register.html";
@@ -53,7 +61,7 @@ app.controller('loginController', function ($scope, $http) {
                 });
         }
     };
-    function movetoLogin(){
+    $scope.movetoLogin=function (){
         window.location.href="login.html";
     }
     const form = document.getElementById('registrationForm');
@@ -140,7 +148,6 @@ app.controller('loginController', function ($scope, $http) {
         }
     }
     $scope.checkEmail=function (){
-
             $.ajax({
                 url: "/auth/player/check-email",
                 method: "GET",

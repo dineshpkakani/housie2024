@@ -55,13 +55,22 @@ create table if not exists user
     );
 
 CREATE TABLE player (
-                        id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                        first_name VARCHAR(100) NOT NULL,
-                        last_name VARCHAR(100) NOT NULL,
-                        email VARCHAR(150) NOT NULL UNIQUE,
-                        phone VARCHAR(20) NOT NULL,
-                        password VARCHAR(255) NOT NULL,
-                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        id BIGINT AUTO_INCREMENT PRIMARY KEY,
+        first_name VARCHAR(100) NOT NULL,
+        last_name VARCHAR(100) NOT NULL,
+        email VARCHAR(150) NOT NULL UNIQUE,
+        phone VARCHAR(20) NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-;
+CREATE TABLE email_otp (
+       id BIGINT AUTO_INCREMENT PRIMARY KEY,
+       email VARCHAR(255) NOT NULL,
+       otp VARCHAR(10) NOT NULL,
+       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+       expires_at TIMESTAMP NOT NULL
+);
+alter table player
+    add role varchar(20) not null;
+

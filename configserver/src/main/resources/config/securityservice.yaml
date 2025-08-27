@@ -17,17 +17,6 @@ spring:
   devtools:
     restart:
       enabled: true
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: denishkakani@gmail.com
-    password: Dinesh87?   # use app-specific password for Gmail
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
   main:
     web-application-type: reactive
 app:

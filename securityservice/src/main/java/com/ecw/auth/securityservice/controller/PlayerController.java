@@ -1,11 +1,18 @@
 package com.ecw.auth.securityservice.controller;
 
 
+import com.ecw.auth.securityservice.config.JwtUtil;
+import com.ecw.auth.securityservice.dto.LoginRequest;
 import com.ecw.auth.securityservice.entity.Player;
+import com.ecw.auth.securityservice.service.OtpService;
 import com.ecw.auth.securityservice.service.PlayerService;
+import com.ecw.auth.securityservice.util.Constants;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/player")
@@ -13,10 +20,14 @@ public class PlayerController {
 
     private final PlayerService playerService;
     private final PasswordEncoder passwordEncoder;
+    private final OtpService otpService;
+    private final JwtUtil jwtUtil;
 
-    public PlayerController(PlayerService playerService, PasswordEncoder passwordEncoder) {
+    public PlayerController(PlayerService playerService, PasswordEncoder passwordEncoder, OtpService otpService, JwtUtil jwtUtil) {
         this.playerService = playerService;
         this.passwordEncoder = passwordEncoder;
+        this.otpService = otpService;
+        this.jwtUtil = jwtUtil;
     }
 
     // ✅ API to check email existence
@@ -36,6 +47,25 @@ public class PlayerController {
             return ResponseEntity.badRequest().build();
         }
         player.setPassword(passwordEncoder.encode(player.getPassword()));
-        return ResponseEntity.ok(playerService.registerPlayer(player));
+        ResponseEntity<Player>  responseEntity = ResponseEntity.ok(playerService.registerPlayer(player));
+        otpService.generateAndSendOtp(player.getEmail());
+        return responseEntity;
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequest request) {
+        String roles = playerService.login(request.getUsername(), request.getPassword());
+        if ("Invalid Credentials".equals(roles)) {
+            return ResponseEntity.status(401).body("Invalid credentials");
+        } else {
+
+            String bearerToken="";
+            if(roles.equals(Constants.ADMIN)) {
+                bearerToken = jwtUtil.generateToken(request.getUsername(), "ADMIN");
+            }
+            bearerToken = jwtUtil.generateToken(request.getUsername(), "PLAYER");
+
+            return ResponseEntity.ok(bearerToken);
+        }
     }
 }
