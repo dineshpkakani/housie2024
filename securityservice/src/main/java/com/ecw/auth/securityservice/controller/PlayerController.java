@@ -53,19 +53,9 @@ public class PlayerController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest request) {
-        String roles = playerService.login(request.getUsername(), request.getPassword());
-        if ("Invalid Credentials".equals(roles)) {
-            return ResponseEntity.status(401).body("Invalid credentials");
-        } else {
+    public ResponseEntity<Map<String,String>> login(@RequestBody LoginRequest request) {
+        return ResponseEntity.ok(playerService.login(request.getUsername(), request.getPassword()));
 
-            String bearerToken="";
-            if(roles.equals(Constants.ADMIN)) {
-                bearerToken = jwtUtil.generateToken(request.getUsername(), "ADMIN");
-            }
-            bearerToken = jwtUtil.generateToken(request.getUsername(), "PLAYER");
-
-            return ResponseEntity.ok(bearerToken);
         }
-    }
+
 }

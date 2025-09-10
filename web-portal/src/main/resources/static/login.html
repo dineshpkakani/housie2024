@@ -1,66 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-    }
-    .container {
-      width: 300px;
-      padding: 16px;
-      background-color: white;
-      margin: 0 auto;
-      margin-top: 100px;
-      border: 1px solid black;
-      border-radius: 4px;
-    }
-    input[type=text], input[type=password] {
-      width: 100%;
-      padding: 15px;
-      margin: 5px 0 22px 0;
-      border: none;
-      background: #f1f1f1;
-    }
-    input[type=text]:focus, input[type=password]:focus {
-      background-color: #ddd;
-      outline: none;
-    }
-    .btn {
-      background-color: #4CAF50;
-      color: white;
-      padding: 16px 20px;
-      margin: 8px 0;
-      border: none;
-      cursor: pointer;
-      width: 100%;
-      opacity: 0.9;
-    }
-    .btn:hover {
-      opacity: 1;
-    }
-  </style>
-  <script src="js/jquery.min.js"></script>
-  <script src = "js/angular.min.js"> </script>
-  <script src = "js/bootstrap.min.js"> </script>
-  <script src="js/loginController.js"></script>
-  <link href="css/housieadmin.css" rel="stylesheet"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login Page</title>
+  <link rel="stylesheet" href="css/login_style.css" />
 </head>
 <body>
+  <div class="container">
+    <div class="login-box">
+      <!-- Logo -->
+      <div class="logo">
+        <img src="img/logo.png" alt="App Logo"/>
+        <h2>LeafLuck</h2>
+      </div>
 
-<h2>Login Page</h2>
-<div ng-controller="loginController" ng-app="loginApp">
-  <form name="frmlogin" id="frmlogin" method="post" action="/login">
-    <div class="container">
-      <label for="username"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="username" ng-model="username" required>
+      <!-- Login Form -->
+      <form>
+        <h3>Welcome Back 👋</h3>
+        <div class="input-box">
+          <input type="email" placeholder="Email" required/>
+        </div>
+        <div class="input-box">
+          <input type="password" placeholder="Password" required/>
+        </div>
+        <button type="submit" class="btn">Login</button>
 
-      <label for="password"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="password" ng-model="password" required>
-
-      <button type="button" class="btn" ng-click="doLogin()" >Login</button>
-        <button type="button" class="btn" ng-click="doRegister()" >Register</button>
+        <!-- Registration Link -->
+        <p class="register-text">
+          Don’t have an account? 
+          <a href="register.html">Register here</a>
+        </p>
+      </form>
     </div>
-  </form>
-</div>
+  </div>
 </body>
 </html>

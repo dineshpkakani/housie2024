@@ -21,8 +21,16 @@ app.controller('loginController', function ($scope, $http) {
             contentType: "application/json",  // tell server we send JSON
             data: JSON.stringify(param),     // convert JS object → JSON string
             success: function(response) {
-                responseMessage.textContent = "✅ Registration successful!";
-                responseMessage.className = "message success";
+
+                // ✅ Save tokens to localStorage (or cookie if preferred)
+                localStorage.setItem("accessToken", data.accessToken);
+                localStorage.setItem("refreshToken", data.refreshToken);
+                localStorage.setItem("roles", JSON.stringify(data.roles));
+
+                // ✅ Redirect to landing page from backend response
+                window.location.href = data.landingPage;
+
+
             },
             error: function(xhr, status, error) {
                 console.error("Error: ", xhr.responseText);
