@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Housie Home</title>
+  <style>
+    body {font-family:"Poppins",sans-serif;margin:0;background:#f0f0f0;}
+    .top-nav {display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:0.8rem 1.5rem;}
+    .logo-nav h2 {margin:0;}
+    .profile-menu {position:relative;}
+    .profile-icon {background:#fff;color:#667eea;font-weight:bold;padding:8px 14px;border-radius:50%;cursor:pointer;}
+    .dropdown {display:none;position:absolute;right:0;top:50px;background:#fff;border-radius:8px;list-style:none;padding:0;margin:0;box-shadow:0 6px 12px rgba(0,0,0,0.15);width:200px;}
+    .dropdown li {padding:12px;border-bottom:1px solid #eee;text-align:center;}
+    .dropdown li a {text-decoration:none;color:#333;font-weight:500;display:block;}
+    .dropdown li:hover {background:#f9f9f9;}
+    .dropdown-balance {background:#f3f3f3;font-weight:bold;}
+    .container {display:flex;justify-content:center;padding:2rem;}
+    .login-box {background:#fff;padding:2rem;border-radius:12px;box-shadow:0 6px 15px rgba(0,0,0,0.2);width:100%;max-width:1000px;}
+    .dashboard-header {margin:1rem 0;padding:1rem;border-radius:12px;text-align:center;font-weight:600;font-size:1.1rem;color:white;background:linear-gradient(135deg,#667eea,#764ba2);}
+    .event-section h3 {text-align:center;margin-bottom:1rem;}
+    .event-table {width:100%;border-collapse:collapse;border-radius:12px;overflow:hidden;box-shadow:0 6px 15px rgba(0,0,0,0.1);}
+    .event-table th,.event-table td {padding:12px;text-align:center;border-bottom:1px solid #eee;}
+    .event-table th {background:#667eea;color:white;}
+    .btn {padding:8px 14px;border:none;border-radius:8px;cursor:pointer;background:linear-gradient(135deg,#667eea,#764ba2);color:white;font-weight:600;}
+    .btn:hover {transform:scale(1.03);}
+    .btn.small {padding:6px 10px;font-size:0.8rem;}
+    .btn.danger {background:linear-gradient(135deg,#e63946,#d90429);}
+    .modal {display:none;position:fixed;z-index:1000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.6);}
+    .modal-content {background:#fff;margin:8% auto;padding:2rem;border-radius:12px;width:90%;max-width:400px;box-shadow:0 8px 20px rgba(0,0,0,0.3);}
+    .modal-content h3 {margin-top:0;text-align:center;}
+    .close {float:right;font-size:1.5rem;cursor:pointer;color:#666;}
+    .close:hover {color:#000;}
+    .input-box {margin:0.8rem 0;}
+    .input-box input {width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;}
+    #transactionList li,#gamesList li {padding:8px;border-bottom:1px solid #eee;color:#444;}
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="top-nav">
+    <div class="logo-nav"><h2>Housie</h2></div>
+    <div class="profile-menu">
+      <span class="profile-icon" onclick="toggleMenu()">☰</span>
+      <ul id="dropdownMenu" class="dropdown">
+        <li class="dropdown-balance" id="miniBalance">💰 Balance: ₹0</li>
+        <li><a href="#" onclick="openProfileModal()">👤 Profile</a></li>
+        <li><a href="#" onclick="openBalanceModal()">💰 Balance Details</a></li>
+        <li><a href="#" onclick="openTransactionModal()">📜 Transaction History</a></li>
+        <li><a href="tickets.html">🎟️ Tickets</a></li>
+        <li><a href="index.html">🚪 Logout</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="container">
+    <div class="login-box">
+      <div class="dashboard-header" id="dashboardHeader"></div>
+      <div class="event-section">
+        <h3>Available Events 🎉</h3>
+        <button class="btn admin-btn" id="createEventBtn" style="display:none;">+ Create Event</button>
+        <table class="event-table">
+          <thead><tr><th>Name</th><th>Date</th><th>Players</th><th>Tickets</th><th>Price</th><th>Total</th><th>Actions</th></tr></thead>
+          <tbody id="eventTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <div id="profileModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('profileModal')">&times;</span><h3>👤 Profile</h3><div id="profileContent"></div></div></div>
+  <div id="balanceModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('balanceModal')">&times;</span><h3>💰 Balance</h3><div id="balanceContent"></div>
+    <form id="addFundsForm"><div class="input-box"><input type="number" id="fundAmount" placeholder="Enter amount to add" min="1" required></div><button type="submit" class="btn">Add Funds</button></form>
+    <form id="withdrawFundsForm"><div class="input-box"><input type="number" id="withdrawAmount" placeholder="Enter amount to withdraw" min="1" required></div><button type="submit" class="btn danger">Withdraw Funds</button></form>
+  </div></div>
+  <div id="transactionModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('transactionModal')">&times;</span><h3>📜 Transactions</h3><ul id="transactionList"></ul></div></div>
+
+  <script>
+    const userData={profile:{name:"John Doe",email:"john@example.com",joined:"01-Jan-2025",role:"Player"},balance:{amount:850,currency:"₹",lastUpdated:"01-Sep-2025"},transactions:[{date:"01-Sep-2025",detail:"Bought 2 tickets",amount:-200},{date:"25-Aug-2025",detail:"Added funds",amount:+1000}],events:[{id:1,name:"New Year Bash",date:"2025-01-01",players:50,ticketsSold:120,price:100,totalCollection:12000}]};
+    function toggleMenu(){const m=document.getElementById("dropdownMenu");m.style.display=(m.style.display==="block"?"none":"block");}
+    function updateMiniBalance(){document.getElementById("miniBalance").textContent="💰 Balance: "+userData.balance.currency+userData.balance.amount;}
+    function openProfileModal(){document.getElementById("profileContent").innerHTML=`<p><b>Name:</b> ${userData.profile.name}</p><p><b>Email:</b> ${userData.profile.email}</p><p><b>Joined:</b> ${userData.profile.joined}</p><p><b>Role:</b> ${userData.profile.role}</p>`;document.getElementById("profileModal").style.display="block";}
+    function openBalanceModal(){renderBalance();document.getElementById("balanceModal").style.display="block";}
+    function renderBalance(){document.getElementById("balanceContent").innerHTML=`<p>Balance: <b>${userData.balance.currency}${userData.balance.amount}</b></p><p>Updated: ${userData.balance.lastUpdated}</p>`;}
+    function openTransactionModal(){renderTransactions();document.getElementById("transactionModal").style.display="block";}
+    function renderTransactions(){const l=document.getElementById("transactionList");l.innerHTML="";userData.transactions.forEach(tx=>{const li=document.createElement("li");li.textContent=`${tx.date} → ${tx.detail} (${tx.amount>0?"+":""}${userData.balance.currency}${tx.amount})`;l.appendChild(li);});}
+    function closeModal(id){document.getElementById(id).style.display="none";}
+    function renderEvents(){const tb=document.getElementById("eventTableBody");tb.innerHTML="";userData.events.forEach(e=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${e.name}</td><td>${e.date}</td><td>${e.players}</td><td>${e.ticketsSold}</td><td>${e.price}</td><td>${e.totalCollection}</td><td><button class='btn small'>Buy</button></td>`;tb.appendChild(tr);});}
+    window.onload=function(){document.getElementById("dashboardHeader").innerText="🎮 Welcome Player";renderEvents();updateMiniBalance();}
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

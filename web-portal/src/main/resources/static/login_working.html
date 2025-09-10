@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Housie • Login</title>
+  <link rel="stylesheet" href="css/styles-login.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="bg-pattern" aria-hidden="true"></div>
+
+  <main class="container">
+    <section class="card login-card" role="form" aria-labelledby="loginTitle">
+      <header class="logo-row">
+        <div class="logo">
+          <span class="ball">H</span><span class="ball">O</span><span class="ball">U</span><span class="ball">S</span><span class="ball">I</span><span class="ball">E</span>
+        </div>
+        <h1 id="loginTitle">Welcome to Housie</h1>
+        <p class="subtitle">Sign in to join or host games</p>
+      </header>
+
+      <form id="loginForm" novalidate>
+        <div class="field">
+          <label for="username">Username or Email</label>
+          <input id="username" name="username" type="text" placeholder="dinesh@example.com" autocomplete="username" required />
+        </div>
+
+        <div class="field password-field">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" placeholder="••••••••" autocomplete="current-password" required />
+          <button type="button" id="togglePwd" class="icon-btn" aria-label="Show password">👁️</button>
+        </div>
+
+        <div class="row between">
+          <label class="check">
+            <input type="checkbox" id="remember" /> <span>Remember me</span>
+          </label>
+          <a href="#" class="link">Forgot password?</a>
+        </div>
+
+        <button class="btn primary" id="btnLogin" type="submit">Sign in</button>
+
+        <div class="or">or</div>
+
+        <div class="row demo-buttons">
+          <button class="btn success" type="button" id="btnDemoAdmin">Continue as Admin</button>
+          <button class="btn ghost" type="button" id="btnDemoPlayer">Continue as Player</button>
+        </div>
+
+        <p id="error" class="error hidden" role="alert"></p>
+      </form>
+
+      <footer class="foot">
+        <p class="muted">Tip: Admins can create/edit/delete events. Players can register and buy tickets.</p>
+      </footer>
+    </section>
+  </main>
+
+  <script src="js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Variations</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {font-family:"Poppins",sans-serif;margin:0;background:#f0f0f0;}
+    .container {padding:2rem;}
+    .config-box {background:#fff;padding:2rem;border-radius:12px;box-shadow:0 6px 15px rgba(0,0,0,0.15);max-width:800px;margin:1rem auto;}
+    .config-box h2 {margin-top:0;text-align:center;color:#667eea;}
+    table {width:100%;border-collapse:collapse;margin-top:1rem;}
+    th,td {padding:12px;text-align:center;border-bottom:1px solid #eee;}
+    th {background:#667eea;color:white;}
+    input[type="number"] {padding:6px;border:1px solid #ccc;border-radius:6px;width:100px;text-align:center;}
+    .btn {padding:8px 14px;border:none;border-radius:8px;cursor:pointer;background:linear-gradient(135deg,#667eea,#764ba2);color:white;font-weight:600;}
+    .btn:hover {transform:scale(1.03);}
+    .note {margin-top:1rem;font-size:0.9rem;color:#555;text-align:center;}
+  </style>
+</head>
+<body>
+  <!-- Shared Header -->
+  <div id="header"></div>
+
+  <div class="container">
+    <div class="config-box">
+      <h2>⚙️ Event Variations & Prizes</h2>
+      <p style="text-align:center;">Configure prizes for each variation of <b id="eventName">New Year Bash</b></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Variation</th>
+            <th>Prize Amount (₹)</th>
+            <th>Winners</th>
+            <th>Prize Per Winner</th>
+          </tr>
+        </thead>
+        <tbody id="variationTableBody"></tbody>
+      </table>
+      <div style="text-align:center;margin-top:1.5rem;">
+        <button class="btn" onclick="saveConfig()">💾 Save Configuration</button>
+      </div>
+      <p class="note">* If multiple winners, prize will be equally distributed.</p>
+    </div>
+  </div>
+
+  <!-- Modals (reused from header.js) -->
+  <div id="profileModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('profileModal')">&times;</span><h3>👤 Profile</h3><div id="profileContent"></div></div></div>
+  <div id="balanceModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('balanceModal')">&times;</span><h3>💰 Balance</h3><div id="balanceContent"></div></div></div>
+  <div id="transactionModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('transactionModal')">&times;</span><h3>📜 Transactions</h3><ul id="transactionList"></ul></div></div>
+  <div id="gamesModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('gamesModal')">&times;</span><h3>🎲 Games</h3><ul id="gamesList"></ul></div></div>
+
+  <script>
+    const variations = ["Top Line","Middle Line","Bottom Line","Four Corners","Full House"];
+    const variationData = variations.map(v => ({name:v, prize:0, winners:1}));
+
+    function renderTable(){
+      const tbody=document.getElementById("variationTableBody");
+      tbody.innerHTML="";
+      variationData.forEach((v,idx)=>{
+        const tr=document.createElement("tr");
+        tr.innerHTML=`
+          <td>${v.name}</td>
+          <td><input type="number" min="0" value="${v.prize}" onchange="updatePrize(${idx},this.value)"></td>
+          <td><input type="number" min="1" value="${v.winners}" onchange="updateWinners(${idx},this.value)"></td>
+          <td>₹ ${(v.prize / v.winners).toFixed(2)}</td>`;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function updatePrize(idx,val){variationData[idx].prize=parseInt(val)||0;renderTable();}
+    function updateWinners(idx,val){variationData[idx].winners=parseInt(val)||1;renderTable();}
+
+    function saveConfig(){
+      console.log("Saved config:", variationData);
+      alert("Configuration saved ✅ (Check console for details)");
+    }
+
+    // Init
+    renderTable();
+  </script>
+  <script src="header.js"></script>
+  <script>
+    fetch("header.html").then(res=>res.text()).then(data=>{document.getElementById("header").innerHTML=data;updateMiniBalance();});
+  </script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+/* styles-login.css — Housie themed login */
+:root{
+  --bg:#0f172a;           /* dark slate */
+  --card:#0b1220;         /* card base */
+  --muted:#1f2937;        /* inputs */
+  --text:#e5e7eb;
+  --text-dim:#9ca3af;
+  --accent:#22d3ee;       /* cyan */
+  --accent-2:#38bdf8;
+  --success:#22c55e;
+  --danger:#ef4444;
+  --radius:18px;
+  --shadow:0 18px 40px rgba(0,0,0,.45);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; font:500 15px/1.5 "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  color:var(--text); background: radial-gradient(1200px 600px at 10% -10%, #0b1220 0%, #020617 60%) fixed;
+  overflow:auto;
+}
+
+/* Playful bingo-ball background */
+.bg-pattern{
+  position:fixed; inset:0; pointer-events:none; opacity:.15;
+  background:
+    radial-gradient(40px 40px at 10% 20%, #22d3ee22 0 60%, transparent 61%) 0 0/220px 220px,
+    radial-gradient(36px 36px at 70% 30%, #38bdf822 0 60%, transparent 61%) 60px 80px/240px 240px,
+    radial-gradient(28px 28px at 40% 80%, #a78bfa22 0 60%, transparent 61%) 130px -40px/200px 200px,
+    radial-gradient(22px 22px at 85% 70%, #f472b622 0 60%, transparent 61%) -40px 120px/190px 190px;
+  filter: blur(0.2px);
+}
+
+.container{min-height:100%; display:grid; place-items:center; padding:32px}
+.card{
+  width:min(450px, 92vw);
+  background:linear-gradient(180deg, var(--card), #091425);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:24px 22px;
+}
+
+.logo-row{ text-align:center; }
+.logo{ display:inline-flex; gap:6px; margin-bottom:6px; }
+.logo .ball{
+  width:36px; height:36px; display:grid; place-items:center;
+  border-radius:50%;
+  font-weight:800; color:#041016;
+  background: radial-gradient(circle at 30% 30%, #fff 0, #f3f8fb 40%, #d3f2ff 70%);
+  box-shadow: inset 0 2px 3px #ffffffaa, inset 0 -5px 10px #00000022, 0 4px 10px #00000055;
+  border: 2px solid #e0fbff;
+}
+h1{margin:6px 0 0 0; font-size:22px}
+.subtitle{margin:2px 0 18px 0; color:var(--text-dim)}
+
+.field{display:flex; flex-direction:column; gap:6px; margin-bottom:12px}
+label{font-size:12px; color:var(--text-dim)}
+input[type="text"], input[type="password"]{
+  background:var(--muted); border:1px solid rgba(255,255,255,.12);
+  color:var(--text); padding:12px 12px; border-radius:12px; outline:none;
+}
+input:focus{ border-color: var(--accent); box-shadow: 0 0 0 3px #22d3ee33; }
+
+.row{display:flex; gap:10px; align-items:center}
+.row.between{justify-content:space-between}
+
+.check input{accent-color: var(--accent)}
+.link{color:var(--accent); text-decoration:none}
+.link:hover{text-decoration:underline}
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:12px 14px; border-radius:12px; border:0; cursor:pointer;
+  background:#1f2937; color:var(--text);
+  transition: transform .08s ease, box-shadow .15s ease;
+}
+.btn:hover{ transform: translateY(-1px); box-shadow:0 10px 20px #00000055; }
+.btn:active{ transform: translateY(0); }
+.btn.primary{
+  font-weight:800; color:#041016;
+  background:linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+.btn.success{ background:linear-gradient(90deg, #86efac, #22c55e); color:#062a16; }
+.btn.ghost{ background:transparent; border:1px solid rgba(255,255,255,.14); }
+
+.icon-btn{
+  position:absolute; right:10px; top:34px;
+  background:transparent; border:0; cursor:pointer; color:var(--text-dim);
+}
+.password-field{ position:relative; }
+
+.or{ text-align:center; color:var(--text-dim); margin:14px 0 10px; }
+.error{ margin-top:10px; color:#fecaca; background:#7f1d1d; border:1px solid #fca5a5; padding:8px 10px; border-radius:10px }
+.hidden{ display:none }
+.muted{ color:var(--text-dim) }
+.foot{ margin-top:8px }

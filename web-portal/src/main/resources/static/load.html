@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Housie Tickets</title>
+  <style>
+    body {margin:0;font-family:"Poppins",sans-serif;background:#f0f0f0;display:flex;height:100vh;}
+    .tickets-container {width:30%;background:#fff;padding:1rem;overflow-y:auto;box-shadow:2px 0 8px rgba(0,0,0,0.1);}
+    .ticket-wrapper {margin-bottom:1.5rem;padding:0.8rem;border-radius:10px;background:#fafafa;box-shadow:0 4px 10px rgba(0,0,0,0.1);}
+    .ticket-title {text-align:center;font-weight:bold;margin-bottom:0.5rem;}
+    .ticket-grid {display:grid;grid-template-columns:repeat(9,1fr);gap:4px;}
+    .ticket-cell {width:28px;height:28px;display:flex;justify-content:center;align-items:center;
+      border-radius:6px;background:#e0e0e0;font-weight:600;font-size:0.85rem;}
+    .ticket-cell.marked {background:#667eea;color:white;}
+
+    .number-display {flex:1;display:flex;justify-content:center;align-items:center;}
+    .circle {width:200px;height:200px;border-radius:50%;background:#667eea;color:white;font-size:3rem;
+      display:flex;justify-content:center;align-items:center;font-weight:bold;
+      animation: blink 1s infinite alternate;}
+    @keyframes blink {from{opacity:1;}to{opacity:0.4;}}
+
+    .variation-container {width:25%;background:#fff;padding:1rem;box-shadow:-2px 0 8px rgba(0,0,0,0.1);}
+    .variation-title {text-align:center;font-weight:bold;margin-bottom:1rem;}
+    .variation-list {list-style:none;padding:0;}
+    .variation-list li {margin:0.5rem 0;padding:0.6rem;border-radius:8px;background:#f9f9f9;
+      display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;}
+    .variation-list select {margin-right:8px;padding:4px;border-radius:6px;}
+    .variation-list button {background:#667eea;color:white;border:none;border-radius:6px;padding:4px 8px;cursor:pointer;}
+    .variation-list button:hover {background:#5a67d8;}
+  </style>
+</head>
+<body>
+  <!-- Left: Tickets -->
+  <div class="tickets-container" id="ticketsContainer"></div>
+
+  <!-- Middle: Number -->
+  <div class="number-display">
+    <div class="circle" id="currentNumber">--</div>
+  </div>
+
+  <!-- Right: Variations -->
+  <div class="variation-container">
+    <h3 class="variation-title">🏆 Variations</h3>
+    <ul class="variation-list" id="variationList"></ul>
+  </div>
+
+  <script>
+    // Example: Player owns 2 tickets
+    const tickets = [
+      [[5,12,0,24,35,0,59,0,81],[0,18,27,0,40,52,0,70,0],[8,0,29,34,0,56,63,0,90]],
+      [[2,0,15,0,39,0,60,72,0],[7,19,0,33,0,50,0,74,82],[9,0,25,41,0,55,68,0,90]]
+    ];
+
+    // Render all tickets
+    const container = document.getElementById("ticketsContainer");
+    tickets.forEach((ticket, idx)=>{
+      const wrapper=document.createElement("div");
+      wrapper.className="ticket-wrapper";
+      wrapper.innerHTML=`<div class="ticket-title">Ticket ${idx+1}</div>`;
+      const grid=document.createElement("div");
+      grid.className="ticket-grid";
+      ticket.forEach(row=>{
+        row.forEach(num=>{
+          const cell=document.createElement("div");
+          cell.className="ticket-cell";
+          if(num!==0) cell.textContent=num;
+          grid.appendChild(cell);
+        });
+      });
+      wrapper.appendChild(grid);
+      container.appendChild(wrapper);
+    });
+
+    // Variations
+    const variations=["Top Line","Middle Line","Bottom Line","Four Corners","Full House"];
+    const variationList=document.getElementById("variationList");
+    variations.forEach(v=>{
+      const li=document.createElement("li");
+      const select=document.createElement("select");
+      tickets.forEach((t,i)=>{
+        const opt=document.createElement("option");
+        opt.value=i;
+        opt.textContent="Ticket "+(i+1);
+        select.appendChild(opt);
+      });
+      const btn=document.createElement("button");
+      btn.textContent="Claim";
+      btn.onclick=()=>claimVariation(select.value,v);
+      li.appendChild(document.createTextNode(v+" "));
+      li.appendChild(select);
+      li.appendChild(btn);
+      variationList.appendChild(li);
+    });
+
+    // Simulated number updates
+    let current=1;
+    function updateNumber(){
+      document.getElementById("currentNumber").textContent=current;
+      highlightNumber(current);
+      current++;
+      if(current<=90) setTimeout(updateNumber,3000);
+    }
+    updateNumber();
+
+    function highlightNumber(num){
+      document.querySelectorAll(".ticket-cell").forEach(c=>{
+        if(c.textContent==num) c.classList.add("marked");
+      });
+    }
+
+    function claimVariation(ticketIndex,variation){
+      alert("Claim sent: Ticket "+(parseInt(ticketIndex)+1)+" - "+variation+" ✅");
+      // TODO: send via WebSocket: stompClient.send("/app/claim", {}, JSON.stringify({player:"John",ticketIndex:ticketIndex,variation:variation}));
+    }
+  </script>
+</body>
+</html>
