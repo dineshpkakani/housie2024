@@ -5,8 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Housie Home</title>
     <style>
+		/* Logo */
+	.logo img {
+	  width: 60px;
+	  height: 35px;
+	  object-fit:cover;
+	}
         body {font-family: "Poppins", sans-serif; margin:0; background:#f0f0f0;}
-        .top-nav {display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:0.8rem 1.5rem;}
+        .top-nav {display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;}
         .logo-nav h2 {margin:0;}
         .profile-menu {position:relative;}
         .profile-icon {background:#fff;color:#667eea;font-weight:bold;padding:8px 14px;border-radius:50%;cursor:pointer;}
@@ -45,11 +51,16 @@
 <body>
 <!-- Top Navigation -->
 <div class="top-nav">
-    <div class="logo-nav"><h2>Housie</h2></div>
+    <div class="logo-nav">
+		<div class="logo">
+			<img src="img/logo.png" alt="App Logo"/>		
+		</div>
+	</div>
+	<div id="dashboardHeader"></div>
     <div class="profile-menu">
         <span class="profile-icon" onclick="toggleMenu()">☰</span>
         <ul id="dropdownMenu" class="dropdown">
-            <li class="dropdown-balance" id="miniBalance">💰 Balance: ₹0</li>
+            <li class="dropdown-balance"><a href="#" id="miniBalance">💰 Balance: ₹0</a></li>
             <li><a href="#" onclick="openProfileModal()">👤 Profile</a></li>
             <li><a href="#" onclick="openBalanceModal()">💰 Balance Details</a></li>
             <li><a href="#" onclick="openTransactionModal()">📜 Transaction History</a></li>
@@ -59,40 +70,72 @@
     </div>
 </div>
 
-<div class="container">
-    <div class="login-box">
-        <div class="dashboard-header" id="dashboardHeader"></div>
-        <div class="event-section">
-            <h3>Available Events 🎉</h3>
-            <button class="btn admin-btn" id="createEventBtn" >+ Create Event</button> <!--style="display:none;" -->
-            <table class="event-table">
-                <thead><tr><th>Name</th><th>Date</th><th>Players</th><th>Tickets</th><th>Price</th><th>Total</th><th>Actions</th></tr></thead>
-                <tbody id="eventTableBody"></tbody>
-            </table>
-        </div>
-    </div>
-</div>
 
 <!-- Modals -->
-<div id="profileModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('profileModal')">&times;</span><h3>👤 Profile</h3><div id="profileContent"></div></div></div>
-<div id="balanceModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('balanceModal')">&times;</span><h3>💰 Balance</h3><div id="balanceContent"></div>
-    <form id="addFundsForm"><div class="input-box"><input type="number" id="fundAmount" placeholder="Enter amount to add" min="1" required></div><button type="submit" class="btn">Add Funds</button></form>
-    <form id="withdrawFundsForm"><div class="input-box"><input type="number" id="withdrawAmount" placeholder="Enter amount to withdraw" min="1" required></div><button type="submit" class="btn danger">Withdraw Funds</button></form>
-</div></div>
-<div id="transactionModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('transactionModal')">&times;</span><h3>📜 Transactions</h3><ul id="transactionList"></ul></div></div>
-<div id="gamesModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('gamesModal')">&times;</span><h3>🎲 Games</h3><ul id="gamesList"></ul></div></div>
-<div id="eventModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('eventModal')">&times;</span><h3 id="modalTitle">Add Event</h3><form id="eventForm">
-    <div class="input-box"><input type="text" id="eventName" placeholder="Event Name" required></div>
-    <div class="input-box"><input type="date" id="eventDate" required></div>
-    <div class="input-box"><input type="number" id="pricePerTicket" placeholder="Price per Ticket" required></div>
-    <button type="submit" class="btn">Save</button></form></div></div>
-<div id="ticketModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('ticketModal')">&times;</span><h3>Buy Tickets</h3><form id="ticketForm">
-    <p><strong>Event:</strong> <span id="ticketEventName"></span></p>
-    <p><strong>Price per Ticket:</strong> ₹<span id="ticketPrice"></span></p>
-    <div class="input-box"><input type="number" id="ticketQuantity" min="1" required></div>
-    <p><strong>Total:</strong> ₹<span id="ticketTotal">0</span></p>
-    <button type="submit" class="btn">Confirm Purchase</button></form></div></div>
-
+<div id="profileModal" class="modal">
+	<div class="modal-content">
+		<span class="close" onclick="closeModal('profileModal')">&times;</span>
+		<h3>👤 Profile</h3>
+		<div id="profileContent"></div>
+	</div>
+</div>
+<div id="balanceModal" class="modal">
+	<div class="modal-content">
+		<span class="close" onclick="closeModal('balanceModal')">&times;</span>
+		<h3>💰 Balance</h3>
+		<div id="balanceContent"></div>
+		<form id="addFundsForm">
+			<div class="input-box">
+				<input type="number" id="fundAmount" placeholder="Enter amount to add" min="1" required>
+			</div>
+			<button type="submit" class="btn">Add Funds</button>
+		</form>
+		<form id="withdrawFundsForm">
+			<div class="input-box">
+				<input type="number" id="withdrawAmount" placeholder="Enter amount to withdraw" min="1" required></div>
+				<button type="submit" class="btn danger">Withdraw Funds</button>
+		</form>
+	</div>
+</div>
+<div id="transactionModal" class="modal">
+	<div class="modal-content">
+		<span class="close" onclick="closeModal('transactionModal')">&times;</span>
+			<h3>📜 Transactions</h3>
+			<ul id="transactionList"></ul>
+	</div>
+</div>
+<div id="gamesModal" class="modal">
+	<div class="modal-content">
+		<span class="close" onclick="closeModal('gamesModal')">&times;</span>
+		<h3>🎲 Games</h3>
+		<ul id="gamesList"></ul>
+	</div>
+</div>
+<div id="eventModal" class="modal">
+	<div class="modal-content">
+		<span class="close" onclick="closeModal('eventModal')">&times;</span>
+		<h3 id="modalTitle">Add Event</h3>
+		<form id="eventForm">
+			<div class="input-box"><input type="text" id="eventName" placeholder="Event Name" required></div>
+			<div class="input-box"><input type="date" id="eventDate" required></div>
+			<div class="input-box"><input type="number" id="pricePerTicket" placeholder="Price per Ticket" required></div>
+			<button type="submit" class="btn">Save</button>
+		</form>
+	</div>
+</div>
+<div id="ticketModal" class="modal">
+	<div class="modal-content">
+		<span class="close" onclick="closeModal('ticketModal')">&times;</span>
+		<h3>Buy Tickets</h3>
+		<form id="ticketForm">
+			<p><strong>Event:</strong> <span id="ticketEventName"></span></p>
+			<p><strong>Price per Ticket:</strong> ₹<span id="ticketPrice"></span></p>
+			<div class="input-box"><input type="number" id="ticketQuantity" min="1" required></div>
+			<p><strong>Total:</strong> ₹<span id="ticketTotal">0</span></p>
+			<button type="submit" class="btn">Confirm Purchase</button>
+		</form>
+	</div>
+</div>
 <script>
     //const userRole = "player"; // change to "admin" to test
     const userRole = "admin"; // change to "admin" to test
@@ -103,28 +146,119 @@
         games:[{name:"Housie Classic",time:"5:00 PM"},{name:"Fast Five",time:"7:00 PM"}],
         events:[{id:1,name:"New Year Bash",date:"2025-01-01",players:50,ticketsSold:120,price:100,totalCollection:12000}]
     };
-    function toggleMenu(){const m=document.getElementById("dropdownMenu");m.style.display=(m.style.display==="block"?"none":"block");}
-    function updateMiniBalance(){document.getElementById("miniBalance").textContent="💰 Balance: "+userData.balance.currency+userData.balance.amount;}
-    function renderEvents(){const tb=document.getElementById("eventTableBody");tb.innerHTML="";userData.events.forEach(e=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${e.name}</td><td>${e.date}</td><td>${e.players}</td><td>${e.ticketsSold}</td><td>${e.price}</td><td>${e.totalCollection}</td><td><button class='btn small' onclick="openTicketModal(${e.id},'${e.name}',${e.price})">Buy</button>${userRole==='admin'?`<button class='btn small' onclick="openEditModal(${e.id})">Edit</button><button class='btn small danger' onclick="deleteEvent(${e.id})">Delete</button>`:""}</td>`;tb.appendChild(tr);});}
-    function openProfileModal(){document.getElementById("profileContent").innerHTML=`<p><b>Name:</b> ${userData.profile.name}</p><p><b>Email:</b> ${userData.profile.email}</p><p><b>Joined:</b> ${userData.profile.joined}</p><p><b>Role:</b> ${userData.profile.role}</p>`;document.getElementById("profileModal").style.display="block";}
-    function openBalanceModal(){renderBalance();document.getElementById("balanceModal").style.display="block";}
-    function renderBalance(){document.getElementById("balanceContent").innerHTML=`<p>Balance: <b>${userData.balance.currency}${userData.balance.amount}</b></p><p>Updated: ${userData.balance.lastUpdated}</p>`;}
-    function openTransactionModal(){renderTransactions();document.getElementById("transactionModal").style.display="block";}
-    function renderTransactions(){const l=document.getElementById("transactionList");l.innerHTML="";userData.transactions.forEach(tx=>{const li=document.createElement("li");li.textContent=`${tx.date} → ${tx.detail} (${tx.amount>0?"+":""}${userData.balance.currency}${tx.amount})`;l.appendChild(li);});}
-    function openGamesModal(){const l=document.getElementById("gamesList");l.innerHTML="";userData.games.forEach(g=>{const li=document.createElement("li");li.textContent=`${g.name} - ${g.time}`;l.appendChild(li);});document.getElementById("gamesModal").style.display="block";}
-    function logout(){alert("Logging out...");}
-    document.getElementById("addFundsForm").onsubmit=function(e){e.preventDefault();let a=parseInt(document.getElementById("fundAmount").value)||0;if(a>0){userData.balance.amount+=a;userData.transactions.unshift({date:new Date().toLocaleDateString(),detail:"Added funds",amount:a});renderBalance();renderTransactions();updateMiniBalance();alert("Funds added: "+userData.balance.currency+a);}document.getElementById("fundAmount").value="";};
-    document.getElementById("withdrawFundsForm").onsubmit=function(e){e.preventDefault();let a=parseInt(document.getElementById("withdrawAmount").value)||0;if(a>0&&a<=userData.balance.amount){userData.balance.amount-=a;userData.transactions.unshift({date:new Date().toLocaleDateString(),detail:"Withdrew funds",amount:-a});renderBalance();renderTransactions();updateMiniBalance();alert("Funds withdrawn: "+userData.balance.currency+a);}else alert("Invalid amount!");document.getElementById("withdrawAmount").value="";};
-    function openTicketModal(id,name,price){document.getElementById("ticketEventName").textContent=name;document.getElementById("ticketPrice").textContent=price;document.getElementById("ticketQuantity").value=1;updateTotal(price);document.getElementById("ticketModal").style.display="block";currentPrice=price;}
-    function updateTotal(price){let qty=parseInt(document.getElementById("ticketQuantity").value)||0;document.getElementById("ticketTotal").textContent=qty*price;}
-    document.getElementById("ticketQuantity").oninput=function(){updateTotal(currentPrice);}
-    document.getElementById("ticketForm").onsubmit=function(e){e.preventDefault();let qty=parseInt(document.getElementById("ticketQuantity").value)||0;if(qty>0){let cost=qty*currentPrice;if(userData.balance.amount>=cost){userData.balance.amount-=cost;userData.transactions.unshift({date:new Date().toLocaleDateString(),detail:`Bought ${qty} tickets`,amount:-cost});updateMiniBalance();renderTransactions();alert(`Bought ${qty} tickets for ${document.getElementById("ticketEventName").textContent}`);}else alert("Insufficient balance!");}closeModal("ticketModal");};
+    function toggleMenu(){
+		const m=document.getElementById("dropdownMenu");
+		m.style.display=(m.style.display==="block"?"none":"block");
+	}
+    function updateMiniBalance(){
+		document.getElementById("miniBalance").textContent="💰 Balance: "+userData.balance.currency+userData.balance.amount;
+	}
+    function renderEvents(){
+	
+	}
+    function openProfileModal(){
+		document.getElementById("profileContent").innerHTML=`<p><b>Name:</b> ${userData.profile.name}</p><p><b>Email:</b> ${userData.profile.email}</p><p><b>Joined:</b> ${userData.profile.joined}</p><p><b>Role:</b> ${userData.profile.role}</p>`;document.getElementById("profileModal").style.display="block";
+	}
+    function openBalanceModal(){
+		renderBalance();
+		document.getElementById("balanceModal").style.display="block";
+	}
+    function renderBalance(){
+		document.getElementById("balanceContent").innerHTML=`<p>Balance: <b>${userData.balance.currency}${userData.balance.amount}</b></p><p>Updated: ${userData.balance.lastUpdated}</p>`;
+	}
+    function openTransactionModal(){
+		renderTransactions();
+		document.getElementById("transactionModal").style.display="block";
+	}
+    function renderTransactions(){
+	const l=document.getElementById("transactionList");l.innerHTML="";
+	userData.transactions.forEach(tx=>{
+	const li=document.createElement("li");
+	li.textContent=`${tx.date} → ${tx.detail} (${tx.amount>0?"+":""}${userData.balance.currency}${tx.amount})`;l.appendChild(li);});
+}
+    function openGamesModal(){
+	const l=document.getElementById("gamesList");
+	l.innerHTML="";
+	userData.games.forEach(g=>{
+	const li=document.createElement("li");
+	li.textContent=`${g.name} - ${g.time}`;
+	l.appendChild(li);
+	});
+	document.getElementById("gamesModal").style.display="block";}
+    function logout(){
+	alert("Logging out...");
+	}
+    document.getElementById("addFundsForm").onsubmit=function(e){
+	e.preventDefault();
+	let a=parseInt(document.getElementById("fundAmount").value)||0;
+	if(a>0){
+	userData.balance.amount+=a;
+	userData.transactions.unshift({date:new Date().toLocaleDateString(),detail:"Added funds",amount:a});
+	renderBalance();
+	renderTransactions();
+	updateMiniBalance();
+	alert("Funds added: "+userData.balance.currency+a);
+	}
+	document.getElementById("fundAmount").value="";};
+	
+    document.getElementById("withdrawFundsForm").onsubmit=function(e){
+	e.preventDefault();
+	let a=parseInt(document.getElementById("withdrawAmount").value)||0;
+	if(a>0&&a<=userData.balance.amount){
+	userData.balance.amount-=a;
+	userData.transactions.unshift({date:new Date().toLocaleDateString(),detail:"Withdrew funds",amount:-a});
+	renderBalance();
+	renderTransactions();
+	updateMiniBalance();
+	alert("Funds withdrawn: "+userData.balance.currency+a);
+	}
+	else alert("Invalid amount!");
+	document.getElementById("withdrawAmount").value="";
+	};
+    function openTicketModal(id,name,price){
+	document.getElementById("ticketEventName").textContent=name;
+	document.getElementById("ticketPrice").textContent=price;
+	document.getElementById("ticketQuantity").value=1;
+	updateTotal(price);
+	document.getElementById("ticketModal").style.display="block";
+	currentPrice=price;}
+    function updateTotal(price){
+	
+	 let qty=parseInt(document.getElementById("ticketQuantity").value)||0;document.getElementById("ticketTotal").textContent=qty*price;
+	}
+	
+    document.getElementById("ticketQuantity").oninput=function(){
+	updateTotal(currentPrice);
+	}
+    document.getElementById("ticketForm").onsubmit=function(e){
+		e.preventDefault();
+		let qty=parseInt(document.getElementById("ticketQuantity").value)||0;
+		if(qty>0){let cost=qty*currentPrice;
+		if(userData.balance.amount>=cost){
+		userData.balance.amount-=cost;userData.transactions.unshift({date:new Date().toLocaleDateString(),detail:`Bought ${qty} tickets`,amount:-cost});
+		updateMiniBalance();
+		renderTransactions();
+		alert(`Bought ${qty} tickets for ${document.getElementById("ticketEventName").textContent}`);}
+		else alert("Insufficient balance!");
+		}
+		closeModal("ticketModal");
+		};
     function openAddModal(){
         document.getElementById("modalTitle").textContent="Add Event";
-        document.getElementById("eventForm").reset();document.getElementById("eventModal").style.display="block";}
-    function openEditModal(id){document.getElementById("modalTitle").textContent="Edit Event";document.getElementById("eventModal").style.display="block";}
-    document.getElementById("eventForm").onsubmit=function(e){e.preventDefault();alert("Event saved!");closeModal("eventModal");};
-    function deleteEvent(id){if(confirm("Delete event?")){alert("Deleted event "+id);}}
+        document.getElementById("eventForm").reset();
+		document.getElementById("eventModal").style.display="block";
+		}
+    function openEditModal(id){
+	document.getElementById("modalTitle").textContent="Edit Event";
+	document.getElementById("eventModal").style.display="block";
+	}
+    document.getElementById("eventForm").onsubmit=function(e){
+	e.preventDefault();
+	alert("Event saved!");
+	closeModal("eventModal");
+	};
+    function deleteEvent(id){
+	if(confirm("Delete event?")){alert("Deleted event "+id);}}
     function closeModal(id){document.getElementById(id).style.display="none";}
     window.onload=function(){
         document.getElementById("dashboardHeader").innerText=userRole==="admin"?"👑 Welcome Admin":"🎮 Welcome Player";
@@ -134,7 +268,7 @@
         const adminOnlyBtns = document.querySelectorAll(".admin-only");
 
         if (userRole === "admin") {
-            dashboardHeader.innerHTML = "👑 Welcome Admin | Manage Events";
+            dashboardHeader.innerHTML = "👑 Welcome Admin";
             createBtn.style.display = "block";
             adminOnlyBtns.forEach(btn => btn.style.display = "inline-block");
             createBtn.onclick = openAddModal;
